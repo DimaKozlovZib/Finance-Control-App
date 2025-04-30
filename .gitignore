@@ -5,8 +5,11 @@
 /.pnp
 .pnp.js
 
+.vscode
 # testing
 /coverage
+
+googleOAuth.ts
 
 # production
 /build

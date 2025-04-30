@@ -1,7 +1,10 @@
-import React from 'react'
+import { LoginForm } from '@/modules/LoginForm/LoginForm'
+import '../styles/RegistredForm.css'
 
-const LoginPage = () => {
-	return <div>login</div>
+export const LoginPage = () => {
+	return (
+		<div className="FormWrapper">
+			<LoginForm />
+		</div>
+	)
 }
-
-export default LoginPage
