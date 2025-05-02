@@ -10,7 +10,7 @@ body {
 		'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: oklch(20.5% 0 0);
+	@apply bg-neutral-900;
 }
 
 code {

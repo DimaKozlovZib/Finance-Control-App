@@ -1,15 +1,15 @@
 import Header from '@/modules/Header/Header'
-import { FC, JSX } from 'react'
+import { FC, ReactNode } from 'react'
 
 interface ILayout {
-	children: JSX.Element
+	children: ReactNode
 }
 
 const Layout: FC<ILayout> = ({ children }) => {
 	return (
 		<div>
 			<Header />
-			{children}
+			<main className="mt-20 max-w-7xl px-2 mx-auto">{children}</main>
 		</div>
 	)
 }

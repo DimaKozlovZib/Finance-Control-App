@@ -13,11 +13,11 @@ const Header = () => {
 
 	const goToGitHubRepos = () => (window.location.href = gitHubLink)
 	return (
-		<div className="w-full border-b-1 border-dashed border-neutral-50">
+		<div className="w-full fixed z-30 top-0 bg-neutral-800">
 			<div
 				className={clsx(
-					'py-3 px-5 max-w-7xl m-auto flex justify-between',
-					'border-dashed border-neutral-50 border-r-1 border-l-1'
+					'py-3 px-5 max-w-7xl m-auto flex justify-between'
+					//'border-dashed border-neutral-50 border-r-1 border-l-1'
 				)}
 			>
 				<div className="flex gap-8 items-center">
@@ -26,10 +26,10 @@ const Header = () => {
 						<Link
 							to={TRANSACTIONS_PATH}
 							className={clsx(
-								'py-1.5 px-4 rounded-md hover:bg-neutral-800/80',
+								'py-1.5 px-4 rounded-md hover:bg-neutral-700/80',
 								'transition-colors duration-150 ease-in',
 								location.pathname === TRANSACTIONS_PATH
-									? 'bg-neutral-800/70 pointer-events-none'
+									? 'bg-neutral-700/70 pointer-events-none'
 									: ''
 							)}
 						>
@@ -38,10 +38,10 @@ const Header = () => {
 						<Link
 							to={STATISTIC_PATH}
 							className={clsx(
-								'py-1.5 px-4 rounded-md hover:bg-neutral-800/80',
+								'py-1.5 px-4 rounded-md hover:bg-neutral-700/80',
 								'transition-colors duration-150 ease-in',
 								location.pathname === STATISTIC_PATH
-									? 'bg-neutral-800/70 pointer-events-none'
+									? 'bg-neutral-700/70 pointer-events-none'
 									: ''
 							)}
 						>
@@ -51,16 +51,23 @@ const Header = () => {
 				</div>
 
 				<div className="flex items-center gap-2 w-[100px] justify-end">
-					<Button
-						variant={'ghost'}
-						className="cursor-pointer"
-						onClick={goToGitHubRepos}
+					<Link
+						className={clsx(
+							'py-2 px-3 rounded-md hover:bg-neutral-700/80 cursor-pointer',
+							'transition-colors duration-150 ease-in'
+						)}
+						to={gitHubLink}
 					>
 						<GitHubLogo className="size-5" />
-					</Button>
-					<Button variant={'ghost'} className="cursor-pointer">
+					</Link>
+					<button
+						className={clsx(
+							'py-2 px-3 rounded-md hover:bg-neutral-700/80 cursor-pointer',
+							'transition-colors duration-150 ease-in'
+						)}
+					>
 						<LogOut className="size-5" />
-					</Button>
+					</button>
 				</div>
 			</div>
 		</div>

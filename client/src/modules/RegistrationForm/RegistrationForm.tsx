@@ -4,10 +4,10 @@ import { Label } from '@/components/ui/label'
 import { useNavigate } from 'react-router'
 import { LOGIN_PATH } from '@/routes/paths'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import '../../styles/RegistredForm.css'
 import { useState } from 'react'
 import GoogleLogo from '@/components/ui/GoogleLogo'
 import { useGoogleLogin } from '@react-oauth/google'
+import clsx from 'clsx'
 
 const femaleKey = '0',
 	maleKey = '1'
@@ -25,7 +25,14 @@ export const RegistrationForm = () => {
 
 	const goToLoginPage = () => navigate(LOGIN_PATH)
 	return (
-		<div className="Registration_LoginForm">
+		<div
+			id="RegistrationForm"
+			className={clsx(
+				'max-w-xl px-2 sm:px-5 py-7 pb-4 m-auto w-full',
+				'sm:border-l-1 sm:border-t-1 sm:border-b-1 sm:border-r-1 border-neutral-600 rounded-md',
+				'bg-neutral-900/50'
+			)}
+		>
 			<h2 className="text-center text-2xl text-neutral-50">
 				Регистрация
 			</h2>

@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label'
 import { useState } from 'react'
 import { useGoogleLogin } from '@react-oauth/google'
 import GoogleLogo from '@/components/ui/GoogleLogo'
+import clsx from 'clsx'
 
 export const LoginForm = () => {
 	const navigate = useNavigate()
@@ -18,7 +19,14 @@ export const LoginForm = () => {
 
 	const goToRegistrationPage = () => navigate(REGISTRATION_PATH)
 	return (
-		<div className="Registration_LoginForm">
+		<div
+			id="loginForm"
+			className={clsx(
+				'max-w-xl px-2 sm:px-5 py-7 pb-4 m-auto w-full',
+				'sm:border-l-1 sm:border-t-1 sm:border-b-1 sm:border-r-1 border-neutral-600 rounded-md',
+				'bg-neutral-900/50'
+			)}
+		>
 			<h2 className="text-center text-2xl text-neutral-50">Войти</h2>
 			<div className="mt-7 text-neutral-50">
 				<Label htmlFor="emailInput" className="mt-5">

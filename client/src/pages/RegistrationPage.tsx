@@ -3,7 +3,7 @@ import '../styles/RegistredForm.css'
 
 export const RegistrationPage = () => {
 	return (
-		<div className="FormWrapper">
+		<div className="flex items-center flex-auto h-screen px-2">
 			<RegistrationForm />
 		</div>
 	)
