@@ -5,13 +5,13 @@ interface ILayout {
 	children: ReactNode
 }
 
-const Layout: FC<ILayout> = ({ children }) => {
+const AppLayout: FC<ILayout> = ({ children }) => {
 	return (
 		<div>
 			<Header />
-			<main className="mt-20 max-w-7xl px-2 mx-auto">{children}</main>
+			<main className="mt-18 max-w-7xl px-2 mx-auto">{children}</main>
 		</div>
 	)
 }
 
-export default Layout
+export default AppLayout

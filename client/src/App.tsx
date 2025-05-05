@@ -1,4 +1,4 @@
-import './styles/App.scss'
+import './styles/App.css'
 import { RouterProvider } from 'react-router'
 import { router } from './routes/routes'
 import { GoogleOAuthProvider } from '@react-oauth/google'

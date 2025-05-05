@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+.ModalWrapper {
+	@apply bg-neutral-950/70 w-screen h-screen fixed top-0;
+	@apply z-40 flex items-center;
+}
+
+.ModalCont {
+	@apply bg-neutral-800 rounded-xl py-6 px-5 max-w-2xl m-auto flex-auto;
+}
