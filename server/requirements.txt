@@ -1,0 +1,7 @@
+fastapi==0.109.2
+pydantic==2.5
+pydantic_settings==2.2.1
+uvicorn==0.24.0.post1
+SQLAlchemy==2.0.29
+python-jose==3.4.0
+
