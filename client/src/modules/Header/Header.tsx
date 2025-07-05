@@ -1,5 +1,4 @@
 import logo from '@/assets/logo.svg'
-import { Button } from '@/components/ui/button'
 import GitHubLogo from '@/components/ui/GitHubLogo'
 import { STATISTIC_PATH, TRANSACTIONS_PATH } from '@/routes/paths'
 import clsx from 'clsx'
@@ -11,13 +10,11 @@ const gitHubLink = 'https://github.com/DimaKozlovZib/Finance-Control-App'
 const Header = () => {
 	const location = useLocation()
 
-	const goToGitHubRepos = () => (window.location.href = gitHubLink)
 	return (
 		<div className="w-full fixed z-30 top-0 bg-neutral-800">
 			<div
 				className={clsx(
-					'py-3 px-5 max-w-7xl m-auto flex justify-between'
-					//'border-dashed border-neutral-50 border-r-1 border-l-1'
+					'py-2 px-5 max-w-7xl m-auto flex justify-between'
 				)}
 			>
 				<div className="flex gap-8 items-center">
@@ -27,7 +24,7 @@ const Header = () => {
 							to={TRANSACTIONS_PATH}
 							className={clsx(
 								'py-1.5 px-4 rounded-md hover:bg-neutral-700/80',
-								'transition-colors duration-150 ease-in',
+								'transition-colors duration-150 ease-in text-base',
 								location.pathname === TRANSACTIONS_PATH
 									? 'bg-neutral-700/70 pointer-events-none'
 									: ''
@@ -39,7 +36,7 @@ const Header = () => {
 							to={STATISTIC_PATH}
 							className={clsx(
 								'py-1.5 px-4 rounded-md hover:bg-neutral-700/80',
-								'transition-colors duration-150 ease-in',
+								'transition-colors duration-150 ease-in text-base',
 								location.pathname === STATISTIC_PATH
 									? 'bg-neutral-700/70 pointer-events-none'
 									: ''
