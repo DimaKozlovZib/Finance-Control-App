@@ -1,4 +1,4 @@
-const GOOGLE_OAUTH_ID =
-	'166087811313-o3v6j6du0qg332oi83ntnp2h39i3c31s.apps.googleusercontent.com'
+const GOOGLE_OAUTH_ID = import.meta.env.VITE_GOOGLE_OAUTH_ID
+const API_URL = import.meta.env.VITE_API_URL
 
-export { GOOGLE_OAUTH_ID }
+export { GOOGLE_OAUTH_ID, API_URL }
