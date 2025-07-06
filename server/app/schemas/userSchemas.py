@@ -6,12 +6,19 @@ class UserRegistrationRequest(BaseModel):
     password: str
     name: str
     sex: bool
-    
+    verifyCode: str
+
+
 class UserCreate(BaseModel):
     email: EmailStr
     hash_password: str
     name: str
     sex: bool
-    
+
+
 class UserCreateResponse(UserRegistrationRequest):
     id: int
+
+
+class UserEmail(BaseModel):
+    email: EmailStr

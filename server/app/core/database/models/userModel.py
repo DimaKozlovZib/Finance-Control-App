@@ -1,11 +1,11 @@
 from typing import TYPE_CHECKING
 from sqlalchemy import Boolean, Integer, String
 
-from app.core.database.session import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from app.core.database.models.base import Base
 
 if TYPE_CHECKING:
-    from app.core.database.models.transactionModel import Transaction
+    from app.core.database.models.transactionModel import FinTransaction
 
 class User(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
@@ -14,8 +14,8 @@ class User(Base):
     name: Mapped[str] = mapped_column(String, nullable=False)
     sex: Mapped[bool] = mapped_column(Boolean, nullable=False)
     
-    transactions: Mapped[list["Transaction"]] = relationship(
-        "Transactions",
-        back_populates="transaction",
+    fintransactions: Mapped[list["FinTransaction"]] = relationship(
+        "FinTransaction",
+        back_populates="user",
         cascade="all, delete-orphan"
     )

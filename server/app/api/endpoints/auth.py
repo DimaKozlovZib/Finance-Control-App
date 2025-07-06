@@ -1,14 +1,81 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from jose import jwt
-
+from random import choices
+from fastapi import APIRouter, HTTPException, Response, status
 from app.core.database.session import SessionDepends
 from app.crud.user import create_user, get_user_by_email
-from app.schemas.userSchemas import UserRegistrationRequest
+from app.schemas.userSchemas import UserEmail, UserRegistrationRequest
+from app.core.jwt import jwt_token
+from app.api.endpoints.deps.sendEmail import send_verification_email
+from app.core.config import settings
+from app.core.redis import RedisSessionDepends, redisEmailKey
 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+
 @router.post("/registration", status_code=200)
-async def registration(user:UserRegistrationRequest, db: SessionDepends):
-    
-    f = get_user_by_email(db, user.email)
+async def registration(
+    user: UserRegistrationRequest,
+    response: Response,
+    db: SessionDepends,
+    redis: RedisSessionDepends,
+):
+    try:
+        checkUser = await get_user_by_email(db, user.email)
+        if checkUser:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Email already in use"
+            )
+
+        code: str = await redis.get(redisEmailKey(user.email))
+        if code == user.verifyCode:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Wrong verify code"
+            )
+
+        new_user = await create_user(db, user)
+
+        access = jwt_token(timeLimitHours=settings.ACCESS_TOKEN_LIMIT).get_token(
+            new_user
+        )
+        refresh = jwt_token(timeLimitHours=settings.REFRESH_tOKEN_LIMIT).get_token(
+            new_user
+        )
+
+        response.set_cookie(
+            key="refresh_token",
+            value=f"Bearer {refresh}",
+            httponly=True,
+            max_age=settings.REFRESH_tOKEN_LIMIT * 60 * 60,
+            secure=True,
+            samesite="lax",
+        )
+
+        return {
+            "status": status.HTTP_201_CREATED,
+            "message": "User registered successfully",
+            "token": access,
+        }
+
+    except HTTPException:
+        raise
+
+
+@router.post("/setVerifyEmailCode", status_code=200)
+async def setVerifyEmailCode(
+    data: UserEmail, db: SessionDepends, redis: RedisSessionDepends
+):
+    try:
+        checkUser = await get_user_by_email(db, data.email)
+        if checkUser:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Email already in use"
+            )
+
+        randomCode = "".join(choices("0123456789", k=5))  # рандомное пятизначное число
+        await redis.set(redisEmailKey(data.email), randomCode)
+
+        s = await send_verification_email(data.email, randomCode)
+
+        return {"message": "Email sent"}
+    except HTTPException:
+        raise
