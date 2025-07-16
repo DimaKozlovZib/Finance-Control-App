@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     SERVER_EMAIL: str
     EMAIL_PASSWORD: str
 
+    CELERY_BROKER_URL: str
+
     model_config = SettingsConfigDict(
         env_file=os.path.join(
             os.path.dirname(os.path.abspath(__file__)), "..", "..", ".env"

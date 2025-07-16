@@ -9,6 +9,11 @@ class UserRegistrationRequest(BaseModel):
     verifyCode: str
 
 
+class UserRegistrationResponse(BaseModel):
+    token: str
+    message: str
+
+
 class UserCreate(BaseModel):
     email: EmailStr
     hash_password: str

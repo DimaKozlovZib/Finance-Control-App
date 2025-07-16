@@ -2,17 +2,21 @@ from random import choices
 from fastapi import APIRouter, HTTPException, Response, status
 from app.core.database.session import SessionDepends
 from app.crud.user import create_user, get_user_by_email
-from app.schemas.userSchemas import UserEmail, UserRegistrationRequest
+from app.schemas.userSchemas import (
+    UserEmail,
+    UserRegistrationRequest,
+    UserRegistrationResponse,
+)
 from app.core.jwt import jwt_token
-from app.api.endpoints.deps.sendEmail import send_verification_email
 from app.core.config import settings
 from app.core.redis import RedisSessionDepends, redisEmailKey
+from app.core.celery import send_verification_email
 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@router.post("/registration", status_code=200)
+@router.post("/registration", status_code=200, response_model=UserRegistrationResponse)
 async def registration(
     user: UserRegistrationRequest,
     response: Response,
@@ -50,11 +54,9 @@ async def registration(
             samesite="lax",
         )
 
-        return {
-            "status": status.HTTP_201_CREATED,
-            "message": "User registered successfully",
-            "token": access,
-        }
+        return UserRegistrationResponse(
+            message="User registered successfully", token=access
+        )
 
     except HTTPException:
         raise
@@ -74,7 +76,7 @@ async def setVerifyEmailCode(
         randomCode = "".join(choices("0123456789", k=5))  # рандомное пятизначное число
         await redis.set(redisEmailKey(data.email), randomCode)
 
-        s = await send_verification_email(data.email, randomCode)
+        send_verification_email.delay(data.email, randomCode)
 
         return {"message": "Email sent"}
     except HTTPException:
